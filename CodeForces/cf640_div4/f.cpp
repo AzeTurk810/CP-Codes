@@ -11,6 +11,8 @@ using namespace std;
 #define INFi 1e9
 #define INFll 1e18
 
+bool debug = false;
+
 void solve() {
     int n[3];
     for(int i = 0;i < 3;i++) {
@@ -23,10 +25,17 @@ void solve() {
         else
             ans.push_back('1');
     }
-    if(n[1] == 0 && n[0] != 0) 
-        ans = "0";
-    else if(n[1] == 0)
-        ans = "1";
+
+    if(n[1] == 0) {
+        if(n[0] > 0) {
+            ans = string(n[0] + 1 , '0');
+        } else {
+            ans = string(n[2] + 1 , '1');
+        }
+        cout << ans << ln;
+        return;
+    }
+
     for(int i = 0;i < n[2];i++) {
         ans = '1' + ans;
     }
