@@ -3,6 +3,7 @@ Telebe of Adicto && Mamedov yani AzeTurk810
 I see humans but no humanity
 */
 #include <iostream>
+#include <string>
 
 using ll = long long;
 using namespace std;
@@ -11,11 +12,20 @@ using namespace std;
 #define INFi 1e9
 #define INFll 1e18
 
-void solve() {
-    int n; 
-    cin >> n;
-    cout << n + 1 << ln;
-}
+struct prob {
+    int n , m;
+    string s;
+    void init() {
+        
+    }
+    void in() {
+        cin >> n >> m;
+        cin >> s;
+    }
+    void solve() {
+        
+    }
+} prob;
 
 signed main() {
     ios::sync_with_stdio(0);
@@ -23,7 +33,9 @@ signed main() {
     int t = 1;
 //    cin >> t;
     for(int cases = 0 ; cases < t;cases ++) {
-        solve();
+         prob.init();
+         prob.in();
+         prob.solve();
     }
 }
 // Just Imaginary
