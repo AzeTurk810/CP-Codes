@@ -68,6 +68,7 @@ struct prob {
             res.push_back(char((x % 2) + '0'));
             x /= 2;
         }
+        reverse(res.begin() , res.end());
         return res;
     }
 
@@ -80,10 +81,18 @@ struct prob {
         int mn_size = min(x_s.size() , y_s.size());
         ll ans = dp[x_s.size()][y_s.size()].first;
         assert(dp[y_s.size()][x_s.size()].first == ans);
+        int left_most_bitimsi = -1;
         for(int i = 0;i < mn_size;i ++) {
             if(x_s[i] != y_s[i])
                 break;
             ans = min(dp[x_s.size() - 1 - i][y_s.size() - 1 - i].first , ans);
+            left_most_bitimsi = i;
+        }
+        left_most_bitimsi ++;
+        for(int i = 0;i < 4;i++) {
+            for(int j = 0;j < 4;j++) {
+                ans = min(ans , dp[i + x_s.size()][j + y_s.size()].first);
+            }
         }
         cout << ans << ln;
     }
@@ -94,8 +103,8 @@ signed main() {
     cin.tie(nullptr);
     int t = 1;
     cin >> t;
+        prob.init();
     for(int cases = 0 ; cases < t;cases ++) {
-         prob.init();
          prob.in();
          prob.solve();
     }
