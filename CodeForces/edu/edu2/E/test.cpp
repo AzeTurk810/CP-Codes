@@ -20,8 +20,8 @@ using namespace std;
 #define INFll 1e18
 
 void solve() {
-    freopen("E. Lomsat gelral_input4.txt", "w" , stdout);
-    const int N = 1e3;
+    freopen("E. Lomsat gelral_input3.txt", "w" , stdout);
+    const int N = 5e3;
     cout << N << ln;
     for(int i = 1;i <= N;i++) {
         cout << i << ' ';

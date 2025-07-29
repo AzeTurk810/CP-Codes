@@ -28,85 +28,75 @@ using namespace std;
 #define INFi 1e9
 #define INFll 1e18
 #define map unordered_map
+#define N int(1e5 + 10)
+#define int ll
+map<int , int> stl[N];
+vector<int> g[N];
+pair<int , int> ans[N];
+int c[N];
 
-struct prob {
-    int n;
-    vector<int> c , last_ans;
-    vector<vector<int>> g;
-    vector<pair<int, int>> ans;         // solu sum , sagi maks cnt
-    vector<map<int , int>> stl;         // cnt
-    void in() {
-        cin >> n;
-        c.resize(n);
-        g.resize(n);
-        stl.resize(n);
-        last_ans.resize(n);
-        ans.assign(n , {0 , 0});
-        for(int i = 0;i < n;i++) {
-            cin >> c[i];
-        }
-        for(int i = 0;i < n - 1;i++) {
-            int u , v;
-            cin >> u >> v;
-            u--,v--;
-            g[u].push_back(v);
-            g[v].push_back(u);
-        }
+int n;
+void in() {
+    cin >> n;
+    for(int i = 0;i < n;i++) {
+        cin >> c[i];
     }
-
-    void init() {
-        for(int i = 0;i < n;i++) {
-            stl[i][c[i]]++;
-            ans[i].first  = c[i];
-            ans[i].second = 1;
-        }
+    for(int i = 0;i < n - 1;i++) {
+        int u , v;
+        cin >> u >> v;
+        u--,v--;
+        g[u].push_back(v);
+        g[v].push_back(u);
     }
+}
 
-    void dfs(int v , int pa = -1) {
-        for(auto to : g[v]) {
-            if(to == pa) 
-                continue;
-            dfs(to , v);
-            if(stl[v].size() > stl[to].size()) {
-                stl[v].swap(stl[to]);
-                ans[v].swap(ans[to]);
+void init() {
+    for(int i = 0;i < n;i++) {
+        stl[i][c[i]]++;
+        ans[i].first  = c[i];
+        ans[i].second = 1;
+    }
+}
+
+void dfs(int v ,int &pa) {
+    for(auto to : g[v]) {
+        if(to == pa) 
+            continue;
+        dfs(to , v);
+        if(stl[v].size() < stl[to].size()) {
+            stl[v].swap(stl[to]);
+            ans[v].swap(ans[to]);
+        }
+        for(auto it = stl[to].begin(); it != stl[to].end();it++) {
+            stl[v][it->first] += it->second;
+            if(stl[v][it->first] > ans[v].second) {
+                ans[v].second = stl[v][it->first];
+                ans[v].first  = it->first;
+            } else if(ans[v].second == stl[v][it->first] && it->second != 0) {
+                ans[v].first += it->first;
             }
-            ll temp , temp2 , cr , cnt;
-            for(auto it = stl[to].begin(); it != stl[to].end();it++) {
-                cr = it->first , cnt = it->second;
-                temp2 = stl[v][cr];
-                stl[v][cr] += cnt;
-                temp = stl[v][cr];
-                if(temp > ans[v].second) {
-                    ans[v].second = temp;
-                    ans[v].first  = cr;
-                } else if(ans[v].second == temp && temp2 != ans[v].second) {
-                    ans[v].first += cr;
-                }
-            }
-            if(stl[to].size() <= 1e3)
-                std::unordered_map<int, int>().swap(stl[to]);
         }
-        last_ans[v] = ans[v].first;
+        if(stl[to].size() <= 1e3)
+            std::map<int, int>().swap(stl[to]);
     }
+    c[v] = ans[v].first;
+}
 
-    void solve() {
-        init();
-        dfs(0);
-        for(int i = 0;i < n;i++) {
-            cout << last_ans[i] <<  ' ';
-        }
-        cout << ln;
+void solve() {
+    init();
+    int p = -1;
+    dfs(0 , p);
+    for(int i = 0;i < n;i++) {
+        cout << c[i] <<  ' ';
     }
-} prob;
+    cout << ln;
+}       
 
 signed main() {
     ios::sync_with_stdio(0);
     cin.tie(nullptr);
-    int t = 1;
-    for(int cases = 0 ; cases < t;cases ++) {
-         prob.in();
-         prob.solve();
-    }
+    in();
+    solve();
 }
 // Just Imaginary
+

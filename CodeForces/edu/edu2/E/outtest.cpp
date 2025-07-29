@@ -20,7 +20,7 @@ using namespace std;
 #define INFll 1e18
 
 void solve() {
-    const int N = 1e4;
+    const int N = 5e3;
     freopen("E. Lomsat gelral_output3.txt" , "w" , stdout);
     ll sum = 0;
     for(int i = N;i >= 1;i--) {
